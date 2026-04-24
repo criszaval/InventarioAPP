@@ -7,6 +7,7 @@ namespace InventarioApp.Models
         Alimentos,
         Hogar,
         Depoirtes,
+        Muebles,
         Otros
     }
 }

@@ -1,91 +1,74 @@
-﻿// ============================================
-// Estado: Mensaje de bienvenida
-// ============================================
+﻿using InventarioApp.Factories;
+using InventarioApp.Repositories;
+using InventarioApp.Models;
+using InventarioApp.Infrastructure;
 
-int cantidadProductos = 0;
-decimal valorTotalDelInventario = 0.00m;
-bool sistemaActivo = true;
-string nombreSistema = "Sistema de Gestion de Inventario";
+Console.WriteLine("==INVENTARIO APP==");
 
-MostrarBanner();
-bool continuar = true;
+var fileManager = new FileManager();
+string contenido = "Inventario Actualizado";
+fileManager.Escribir(ruta:"Inventario.txt",contenido);
 
-while (continuar)
+string leerContenido = fileManager.Leer(ruta: "Inventario.txt");
+Console.WriteLine(contenido);
+
+
+
+
+
+var repositorio = new  InMemoryProductoRepository();
+
+var laptop = ProductoFactory.Crear("Laptop Dell XPS 13", 1200, 5, CategoriaProducto.Electronica);
+var mouse = ProductoFactory.Crear("Mouse Logitech MX Master", 99, 20, CategoriaProducto.Electronica);
+var teclado = ProductoFactory.Crear("Teclado Mecánico", 150, 3, CategoriaProducto.Electronica);
+var silla = ProductoFactory.Crear("Silla Ergonómica Herman Miller", 500, 8, CategoriaProducto.Muebles);
+var escritorio = ProductoFactory.Crear("Escritorio Stand-up", 300, 2, CategoriaProducto.Muebles);
+
+
+repositorio.Agregar(laptop);
+repositorio.Agregar(mouse);
+repositorio.Agregar(teclado);
+repositorio.Agregar(silla);
+repositorio.Agregar(escritorio);
+
+
+Console.WriteLine($"Productos agregado: {repositorio.Cantidad}\n");
+
+
+
+//CONSULTAS BASICAS LINQ
+
+
+var electronicos= repositorio.BuscarPorCategoria(CategoriaProducto.Electronica);
+
+Console.WriteLine("Productos de Electronica: ");
+
+foreach (var producto in electronicos)
 {
-    MostrarMenu();
-    string comando = LeerEntrada("Inventario");
-    Console.WriteLine($"Comando ingresado: {comando}");
+    Console.WriteLine($"{producto.Nombre} : ${producto.Precio}");
+
     
-    continuar = ProcesarComando(comando);
+
+
 }
 
-// ============================================
-// METODOS
-// ============================================
+var conMouse = repositorio.BuscarPorNombre("mouse");
 
-bool ProcesarComando(string comando)
+
+Console.WriteLine($"\nProductos con 'mouse' en el nombre");
+
+foreach (var producto in conMouse)
 {
-    switch (comando)
-    {
-        case "1":
-            ListarProductos();
-            return true;
-        case "2":
-            AgregarProductos();
-            return true;
-        case "3":
-            BuscarProductos();
-            return true;
-        case "4":
-            Console.WriteLine("Saliendo del sistema...");
-            return false;
-        default:
-            Console.WriteLine($"Comando '{comando}' no válido");
-            return true;
-    }
+    Console.WriteLine($"{producto.Nombre}");
+
+
 }
 
-void ListarProductos()
-{
-    Console.WriteLine("Mostrando Productos...");
-    Console.WriteLine($"Total: {cantidadProductos} productos en el inventario");
-    Console.WriteLine($"Valor: {valorTotalDelInventario}");
-}
+var nombres  = repositorio.ObtenerNombres();
 
-void AgregarProductos()
-{
-    Console.WriteLine("Agregar Producto (Modulo 3)");
-     // ejemplo simple
-}
+Console.WriteLine($"\nTodos los nombres {string.Join(",", nombres)}");
 
-void BuscarProductos()
-{
-    Console.WriteLine("Buscar Producto (Modulo 4)");
-}
 
-string LeerEntrada(string prompt)
-{
-    Console.Write($"{prompt}> ");
-    return Console.ReadLine() ?? "";
-}
+var hayStockBajo = repositorio.HayStockBajo();
 
-// ============================================
-// FUNCIONES
-// ============================================
-
-void MostrarBanner()
-{
-    Console.WriteLine("==============================================");
-    Console.WriteLine("     SISTEMA DE GESTIÓN DE INVENTARIO        ");
-    Console.WriteLine("==============================================");
-    Console.WriteLine();
-}
-
-void MostrarMenu()
-{
-    Console.WriteLine("\nMENU PRINCIPAL");
-    Console.WriteLine("1. Listar - Ver Productos");
-    Console.WriteLine("2. Agregar - Añadir Productos");
-    Console.WriteLine("3. Buscar - Buscar Productos");
-    Console.WriteLine("4. Salir - Terminar");
-}
+Console.WriteLine($"\nhay stock bajo: {hayStockBajo}");
