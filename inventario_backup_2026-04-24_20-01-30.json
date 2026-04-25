@@ -1,0 +1,22 @@
+[
+  {
+    "id": 2,
+    "nombre": "asldasd",
+    "precio": 23444,
+    "cantidad": 3,
+    "categoria": "Electronica",
+    "estado": "Activo",
+    "fechaRegistro": "2026-04-24T19:59:24.7081802-06:00",
+    "valorTotal": 70332
+  },
+  {
+    "id": 3,
+    "nombre": "asoldksa",
+    "precio": 3,
+    "cantidad": 3,
+    "categoria": "Ropa",
+    "estado": "Activo",
+    "fechaRegistro": "2026-04-24T20:01:06.8399985-06:00",
+    "valorTotal": 9
+  }
+]
