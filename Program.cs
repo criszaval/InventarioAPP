@@ -1,9 +1,104 @@
-﻿using InventarioApp.Factories;
+﻿using System;
+using System.Collections.Generic;
+using InventarioApp.Factories;
 using InventarioApp.Repositories;
-using InventarioApp.Models;
+using InventarioApp.Models; // 🔥 corregido (APP -> App)
 using InventarioApp.Infrastructure;
+using InventarioAPP.Infrastructure;
 
-Console.WriteLine("==INVENTARIO APP==");
+var productos = new List<Producto>
+{
+    ProductoFactory.Crear(nombre: "Laptop", precio: 1200.00m, cantidad: 3, CategoriaProducto.Electronica),
+    ProductoFactory.Crear(nombre: "Camisa", precio: 45.00m, cantidad: 15, CategoriaProducto.Ropa),
+    ProductoFactory.Crear(nombre: "Arroz", precio: 12.00m, cantidad: 50, CategoriaProducto.Alimentos),
+    ProductoFactory.Crear(nombre: "Lámpara", precio: 35.00m, cantidad: 2, CategoriaProducto.Hogar),
+    ProductoFactory.Crear(nombre: "Balón", precio: 25.00m, cantidad: 8, CategoriaProducto.Deportes),
+    ProductoFactory.Crear(nombre: "Mesa", precio: 150.00m, cantidad: 4, CategoriaProducto.Muebles)
+};
+
+var generador = new GeneradorReportes(productos);
+
+Console.WriteLine(generador.GenerarResumen());
+Console.WriteLine("\n");
+
+Console.WriteLine(generador.GenerarReporteStockBajo());
+Console.WriteLine("\n");
+
+Console.WriteLine(generador.GenerarTopProductos());
+Console.WriteLine("\n");
+
+Console.WriteLine(generador.ExportarCsv());
+Console.WriteLine("\n");
+
+Console.WriteLine(generador.ExportarResumenJson());
+
+/*Console.WriteLine("==PRUEBA INTEGRACION JSON==");
+
+var almacenamiento = new JsonInventarioStorage ();
+
+var productos = new List<Producto>()
+{
+    new Producto
+    {
+        Id = 1,
+        Nombre = "Laptop",
+        Precio = 999.99m,
+        Cantidad = 10,
+        Categoria = CategoriaProducto.Electronica,
+        Estado = EstadoProducto.Activo
+    },
+
+    new Producto
+    {
+        Id = 2,
+        Nombre = "Mouse",
+        Precio = 25.50m,
+        Cantidad = 50,
+        Categoria = CategoriaProducto.Electronica,
+        Estado = EstadoProducto.Activo
+    }
+};
+
+string ruta = "inventario_test.json";
+almacenamiento.CrearBackup(ruta);
+almacenamiento.Guardar(productos,ruta);
+
+Console.WriteLine("Inventario guardado correctamente");
+
+var productosCargados = almacenamiento.Cargar(ruta);
+
+Console.WriteLine("Inventario cargado correctamente");
+
+foreach (var p in productosCargados)
+{
+   Console.WriteLine($"ID: {p.Id}, Nombre: {p.Nombre}, Precio: {p.Precio}, Cantidad: {p.Cantidad}, Categoria: {p.Categoria}, Estado: {p.Estado}");
+    
+}/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 var fileManager = new FileManager();
 string contenido = "Inventario Actualizado";
@@ -72,3 +167,5 @@ Console.WriteLine($"\nTodos los nombres {string.Join(",", nombres)}");
 var hayStockBajo = repositorio.HayStockBajo();
 
 Console.WriteLine($"\nhay stock bajo: {hayStockBajo}");
+
+*/

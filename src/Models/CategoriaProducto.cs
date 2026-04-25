@@ -8,6 +8,7 @@ namespace InventarioApp.Models
         Hogar,
         Depoirtes,
         Muebles,
+        Deportes,
         Otros
     }
 }

@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "nombre": "Laptop",
+    "precio": 999.99,
+    "cantidad": 10,
+    "categoria": "Electronica",
+    "estado": "Activo",
+    "fechaRegistro": "2026-04-24T16:43:24.0750774-06:00",
+    "valorTotal": 9999.90
+  },
+  {
+    "id": 2,
+    "nombre": "Mouse",
+    "precio": 25.50,
+    "cantidad": 50,
+    "categoria": "Electronica",
+    "estado": "Activo",
+    "fechaRegistro": "2026-04-24T16:43:24.0805368-06:00",
+    "valorTotal": 1275.00
+  }
+]
